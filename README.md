@@ -42,7 +42,9 @@ Then copy the contents of the `.txt` file to your GH secrets
 
 ## Outputs
 
-Output variables are set both locally and in environment variables.
+Output variables are set both locally and in environment variables. Signed files
+are automatically saved with suffix "-signed" at the end of the filename to
+distinguish them from the original ones.
 
 ### `signedReleaseFile`/ ENV: `SIGNED_RELEASE_FILE`
 

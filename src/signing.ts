@@ -62,6 +62,9 @@ export async function signApkFile(
   core.debug('Verifying Signed APK')
   await exec.exec(`"${apkSigner}"`, ['verify', signedApkFile])
 
+  await exec.exec(`"rm -rf"`, [alignedApkFile])
+  core.debug('Deleted alignedApkFile')
+
   return signedApkFile
 }
 
@@ -73,6 +76,7 @@ export async function signAabFile(
   keyPassword?: string
 ): Promise<string> {
   core.debug('Signing AAB file')
+  const signedAabFile = aabFile.replace('.aab', '-signed.aab')
   const jarSignerPath = await io.which('jarsigner', true)
   core.debug(`Found 'jarsigner' @ ${jarSignerPath}`)
   const args = [
@@ -85,7 +89,9 @@ export async function signAabFile(
     '-keystore',
     signingKeyFile,
     '-storepass',
-    keyStorePassword
+    keyStorePassword,
+    '-signedjar',
+    signedAabFile
   ]
 
   if (keyPassword) {
@@ -96,5 +102,5 @@ export async function signAabFile(
 
   await exec.exec(`"${jarSignerPath}"`, args)
 
-  return aabFile
+  return signedAabFile
 }

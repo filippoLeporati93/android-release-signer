@@ -26147,11 +26147,14 @@ async function signApkFile(apkFile, signingKeyFile, alias, keyStorePassword, key
     // Verify
     core.debug('Verifying Signed APK');
     await exec.exec(`"${apkSigner}"`, ['verify', signedApkFile]);
+    await exec.exec(`"rm -rf"`, [alignedApkFile]);
+    core.debug('Deleted alignedApkFile');
     return signedApkFile;
 }
 exports.signApkFile = signApkFile;
 async function signAabFile(aabFile, signingKeyFile, alias, keyStorePassword, keyPassword) {
     core.debug('Signing AAB file');
+    const signedAabFile = aabFile.replace('.aab', '-signed.aab');
     const jarSignerPath = await io.which('jarsigner', true);
     core.debug(`Found 'jarsigner' @ ${jarSignerPath}`);
     const args = [
@@ -26164,14 +26167,16 @@ async function signAabFile(aabFile, signingKeyFile, alias, keyStorePassword, key
         '-keystore',
         signingKeyFile,
         '-storepass',
-        keyStorePassword
+        keyStorePassword,
+        '-signedjar',
+        signedAabFile
     ];
     if (keyPassword) {
         args.push('-keypass', keyPassword);
     }
     args.push(aabFile, alias);
     await exec.exec(`"${jarSignerPath}"`, args);
-    return aabFile;
+    return signedAabFile;
 }
 exports.signAabFile = signAabFile;
 
