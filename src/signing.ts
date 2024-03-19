@@ -75,7 +75,18 @@ export async function signAabFile(
   core.debug('Signing AAB file')
   const jarSignerPath = await io.which('jarsigner', true)
   core.debug(`Found 'jarsigner' @ ${jarSignerPath}`)
-  const args = ['-keystore', signingKeyFile, '-storepass', keyStorePassword]
+  const args = [
+    '-verbose',
+    'true',
+    '-sigalg',
+    'SHA256withRSA',
+    '-digestalg',
+    'SHA-256',
+    '-keystore',
+    signingKeyFile,
+    '-storepass',
+    keyStorePassword
+  ]
 
   if (keyPassword) {
     args.push('-keypass', keyPassword)
