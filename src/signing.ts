@@ -62,9 +62,6 @@ export async function signApkFile(
   core.debug('Verifying Signed APK')
   await exec.exec(`"${apkSigner}"`, ['verify', signedApkFile])
 
-  await exec.exec(`"rm"`, [alignedApkFile])
-  core.debug('Deleted alignedApkFile')
-
   return signedApkFile
 }
 
