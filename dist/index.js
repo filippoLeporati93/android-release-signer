@@ -26147,7 +26147,7 @@ async function signApkFile(apkFile, signingKeyFile, alias, keyStorePassword, key
     // Verify
     core.debug('Verifying Signed APK');
     await exec.exec(`"${apkSigner}"`, ['verify', signedApkFile]);
-    await exec.exec(`"rm -rf"`, [alignedApkFile]);
+    await exec.exec(`"rm"`, [alignedApkFile]);
     core.debug('Deleted alignedApkFile');
     return signedApkFile;
 }
