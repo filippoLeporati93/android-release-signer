@@ -26157,7 +26157,6 @@ async function signAabFile(aabFile, signingKeyFile, alias, keyStorePassword, key
     core.debug(`Found 'jarsigner' @ ${jarSignerPath}`);
     const args = [
         '-verbose',
-        'true',
         '-sigalg',
         'SHA256withRSA',
         '-digestalg',

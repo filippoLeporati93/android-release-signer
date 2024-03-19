@@ -78,7 +78,6 @@ export async function signAabFile(
   core.debug(`Found 'jarsigner' @ ${jarSignerPath}`)
   const args = [
     '-verbose',
-    'true',
     '-sigalg',
     'SHA256withRSA',
     '-digestalg',
